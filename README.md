@@ -28,12 +28,12 @@ Further details
    
    e.g.
    
-- 0000000000000
-- 0000000100000
-- 0000000000000
-- 0000000000010
-- 0001000000000
-- 0000000000000
+0000000000000\n
+0000000100000\n
+0000000000000\n
+0000000000010\n
+0001000000000\n
+0000000000000
 
 - Some results contain all 3 of the artifacts, some have only picked up some of the artifacts, and some have picked up additional 
   erroneous readings.
