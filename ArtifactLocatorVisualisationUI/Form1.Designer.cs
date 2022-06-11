@@ -51,6 +51,7 @@
             this.runButton.TabIndex = 1;
             this.runButton.Text = "Run algorithm";
             this.runButton.UseVisualStyleBackColor = true;
+            this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
             // Form1
             // 

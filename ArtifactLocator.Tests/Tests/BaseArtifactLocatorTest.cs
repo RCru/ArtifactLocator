@@ -9,7 +9,7 @@ namespace ArtifactLocator.Tests
 {
     public abstract class BaseArtifactLocatorTest
     {
-        private protected ArtifactLocator locator;
+        private protected Locator locator;
         private protected List<bool[][]> testData;
 
         public BaseArtifactLocatorTest()

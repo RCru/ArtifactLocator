@@ -14,7 +14,9 @@ Requirements capture has highlighted the following points
 ---------------------------------------------------------
 
 - The archeological team is expecting to find 3 artifacts in the dig.
-- Processing speed is not an issue as there will be a week-long period between the time of image capture and further excavation.
+- Processing speed is not critical as there will be a week-long period between the time of image capture and further excavation.
+- The machine vision model is an off-the-shelf product, the format of the results will not change in future.
+- If the project is successful, it is expected that this tool will be developed further.
 
 Further details
 ---------------

@@ -3,11 +3,12 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ClusterAlgorithms\ClusterAlgorithms.csproj" />
+    <ProjectReference Include="..\Filtering\Filtering.csproj" />
   </ItemGroup>
 
 </Project>

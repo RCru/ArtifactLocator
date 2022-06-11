@@ -1,5 +1,5 @@
 ﻿using NUnit.Framework;
-using ClusterAlgorithms.Implementations;
+using ClusterAlgorithms.KMeans;
 
 namespace ArtifactLocator.Tests
 {
@@ -8,7 +8,7 @@ namespace ArtifactLocator.Tests
     {
         public KMeansTest() : base()
         {
-            locator = new ArtifactLocator(new KMeansClusterAlgorithm());
+            locator = new Locator(new KMeansClusterAlgorithm());
         }
 
         [Test]

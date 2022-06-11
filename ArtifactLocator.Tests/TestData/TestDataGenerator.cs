@@ -7,7 +7,9 @@ namespace ArtifactLocator.Tests.TestData
         private const ushort minArtifactCount = 2;
         private const ushort maxArtifactCount = 5;
 
-        public List<bool[][]> GenerateTestData()
+        public List<bool[][]> GenerateTestData() => GenerateTestData(null);
+
+        public List<bool[][]> GenerateTestData(Action<string> handleException)
         {
             try
             {
@@ -43,7 +45,10 @@ namespace ArtifactLocator.Tests.TestData
             }
             catch (Exception ex)
             {
-                //logging here if UI gets implemented
+                if (handleException != null)
+                {
+                    handleException.Invoke(ex.Message);
+                }
                 return null;
             }
         }

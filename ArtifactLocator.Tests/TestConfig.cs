@@ -3,6 +3,7 @@
     //Do not do this for reals. Quick hack for setting up test data.
     public static class TestConfig
     {
+        public static ushort ExpectedArtifactCount = 3;
         internal static ushort TestDataCount = 10;
         public static ushort TestDataInstanceSize = 100;
 

@@ -8,11 +8,17 @@ namespace ArtifactLocatorVisualisationUI
     {
         public Bitmap Image => image;
 
+        private int width;
+        private int height;
         private Bitmap image;
+
         private const ushort dataPointDiameterPixels = 5;
 
         public ResultsMap(int width, int height)
         {
+            this.width = width;
+            this.height = height;
+
             image = new Bitmap(width, height);
         }
 
@@ -31,6 +37,11 @@ namespace ArtifactLocatorVisualisationUI
                     g.DrawEllipse(Pens.Blue, boundingBox);
                 }
             }
+        }
+
+        public void Clear()
+        {
+            image = new Bitmap(width, height);
         }
 
         private List<Rectangle> GenerateBoundingBoxes(List<(ushort X, ushort Y)> coordinateList, float scalingAdjustment)
