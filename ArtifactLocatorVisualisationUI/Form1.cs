@@ -1,4 +1,5 @@
 using ArtifactLocator;
+using ArtifactLocator.Results;
 using ArtifactLocator.Tests;
 using ArtifactLocator.Tests.TestData;
 using ClusterAlgorithms.KMeans;
@@ -43,7 +44,7 @@ namespace ArtifactLocatorVisualisationUI
 
             List<(ushort X, ushort Y)> artifactCoordinates = artifactMaps.SelectMany(map => map.Interpret()).ToList();
             float scalingAdjustment = visualisationPictureBox.Width / (float)TestConfig.TestDataInstanceSize;
-            resultsMap.AddDataPoints(artifactCoordinates, scalingAdjustment);
+            resultsMap.AddCoordinatePoints(artifactCoordinates, scalingAdjustment);
 
             visualisationPictureBox.Image = resultsMap.Image;
         }
@@ -60,7 +61,18 @@ namespace ArtifactLocatorVisualisationUI
             try
             {
                 var locator = new Locator(new KMeansClusterAlgorithm());
-                locator.Run(artifactMaps, TestConfig.ExpectedArtifactCount);
+                List<AreaOfInterest> areasOfInterest = locator.Run(artifactMaps, TestConfig.ExpectedArtifactCount);
+
+                if (areasOfInterest == null) return;
+
+                resultsMap.Clear();
+
+                float scalingAdjustment = visualisationPictureBox.Width / (float)TestConfig.TestDataInstanceSize;
+
+                areasOfInterest.ForEach(a => resultsMap.AddCoordinatePoints(a.Cluster.Coordinates, scalingAdjustment));
+                resultsMap.AddCentrePoints(areasOfInterest.Select(a => a.Coordinates).ToList(), scalingAdjustment);
+
+                visualisationPictureBox.Image = resultsMap.Image;
             }
             catch (Exception ex)
             {

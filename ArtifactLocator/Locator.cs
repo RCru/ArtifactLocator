@@ -1,4 +1,5 @@
-﻿using ClusterAlgorithms;
+﻿using ArtifactLocator.Results;
+using ClusterAlgorithms;
 using Filtering;
 
 namespace ArtifactLocator
@@ -13,12 +14,14 @@ namespace ArtifactLocator
             this.clusterAlgorithm = clusterAlgorithm;
         }
 
-        public void Run(List<bool[][]> artifactMaps, ushort expectedClusterCount)
+        public List<AreaOfInterest> Run(List<bool[][]> artifactMaps, ushort expectedClusterCount)
         {
             List<(ushort X, ushort Y)> artifacts = artifactMaps.SelectMany(map => map.Interpret()).ToList();
 
             clusterAlgorithm.LoadCoordinates(artifacts);
             List<Cluster> clusters = clusterAlgorithm.Process(expectedClusterCount);
+
+            return clusters.Select(c => new AreaOfInterest(c)).ToList();
         }
     }
 }
