@@ -6,8 +6,4 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ClusterAlgorithms\ClusterAlgorithms.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,6 +14,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ArtifactLocator\ArtifactLocator.csproj" />
+    <ProjectReference Include="..\ClusterAlgorithms\ClusterAlgorithms.csproj" />
+    <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 
 </Project>
