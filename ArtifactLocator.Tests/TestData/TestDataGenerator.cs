@@ -7,50 +7,37 @@ namespace ArtifactLocator.Tests.TestData
         private const ushort minArtifactCount = 2;
         private const ushort maxArtifactCount = 5;
 
-        public List<bool[][]> GenerateTestData() => GenerateTestData(null);
-
-        public List<bool[][]> GenerateTestData(Action<string> handleException)
+        public List<bool[][]> GenerateTestData()
         {
-            try
+            var builder = new TestDataBuilder();
+
+            for (int i = 0; i < TestConfig.TestDataCount; ++i)
             {
-                var builder = new TestDataBuilder();
+                ushort artifactCount = random.Generate(minArtifactCount, maxArtifactCount + 1);
 
-                for (int i = 0; i < TestConfig.TestDataCount; ++i)
+                var artifactLocations = new List<(ushort X, ushort Y)>(artifactCount);
+
+                for (int j = 0; j < artifactCount; ++j)
                 {
-                    ushort artifactCount = random.Generate(minArtifactCount, maxArtifactCount + 1);
+                    (ushort X, ushort Y) artifactCoordinates = default;
 
-                    var artifactLocations = new List<(ushort X, ushort Y)>(artifactCount);
-
-                    for (int j = 0; j < artifactCount; ++j)
+                    if (j < TestConfig.ArtifactLocations.Count)
                     {
-                        (ushort X, ushort Y) artifactCoordinates = default;
-
-                        if (j < TestConfig.ArtifactLocations.Count)
-                        {
-                            artifactCoordinates = random.GeneratePair(TestConfig.ArtifactLocations[j], TestConfig.MaxArtifactLocationDeviance, TestConfig.TestDataInstanceSize);
-                        }
-                        else
-                        {
-                            //add in random noise to make things more fun
-                            artifactCoordinates = random.GeneratePair(TestConfig.TestDataInstanceSize);
-                        }
-
-                        artifactLocations.Add(artifactCoordinates);
+                        artifactCoordinates = random.GeneratePair(TestConfig.ArtifactLocations[j], TestConfig.MaxArtifactLocationDeviance, TestConfig.TestDataInstanceSize);
+                    }
+                    else
+                    {
+                        //add in random noise to make things more fun
+                        artifactCoordinates = random.GeneratePair(TestConfig.TestDataInstanceSize);
                     }
 
-                    builder.AddTestInstance(artifactLocations);
+                    artifactLocations.Add(artifactCoordinates);
                 }
 
-                return builder.Data;
+                builder.AddTestInstance(artifactLocations);
             }
-            catch (Exception ex)
-            {
-                if (handleException != null)
-                {
-                    handleException.Invoke(ex.Message);
-                }
-                return null;
-            }
+
+            return builder.Data;
         }
     }
 }

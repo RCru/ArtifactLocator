@@ -58,12 +58,13 @@ namespace ClusterAlgorithms.KMeans
 
             for (int i = 0; i < newKMeans.Count; ++i)
             {
-                if (newKMeans[i] == null) 
-                {
-                    newKMeans[i] = kMeans[i];
-                    continue;
-                }
+                //this will occur if a kmean cluster is empty.
+                //In this case, we use the last kmean that wasn't empty
+                if (newKMeans[i] == null) newKMeans[i] = kMeans[i];
+            }
 
+            for (int i = 0; i < newKMeans.Count; ++i)
+            {
                 if (!kMeans[i].IsSameAs(newKMeans[i]))
                 {
                     return Cluster(newKMeans);
@@ -84,11 +85,6 @@ namespace ClusterAlgorithms.KMeans
             {
                 (ushort X, ushort Y) startingMean = random.GeneratePair(lowerBound, upperBound);
                 startingMeans.Add(new KMean(startingMean));
-
-                if (startingMeans.Any(sm => sm == null))
-                {
-
-                }
             }
 
             return startingMeans;
