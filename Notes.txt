@@ -1,0 +1,40 @@
+
+The approach
+------------
+
+I've created an implementation of a 3D KMeans Clustering algorithm to sort 3D data into possible clusters.
+The legitimacy of these clusters is assessed with the use of a "ClusterDiameterFilter" which removes outliers one by one until the cluster size is
+within set bounds or we have taken out too many data points to believe we have a legitimate cluster. 
+
+Architecture
+------------
+
+The ArtifactLocator project is the highest level module, and has been designed with dependency injection in mind. ArtifactLocator has no project
+dependencies, but exposes a number of Interfaces and baseclasses which any lower level modules are free to implement and pass their implemntation
+into the constructor in the Locator class. The implementations I've provided are contained with the ClusterAlgorithms, and Filters projects. These
+projects can easily be extended to update the behaviour of the clustering and filtering functions.
+
+The ArtifactLocator.Tests (Unit tests) project and the ArtifactLocatorVisualisationUI (UI test) projects contain some ugly close coupling, but these 
+are just intended to be used for testing and illustration. 
+
+Coding style
+------------
+
+I have adopted an OO approach throughout, which has created (I hope) very readable and easily maintainable code. I have no doubt that a few 10s/100s 
+of milliseconds could be shaved off with a more functional approach. However, there is no noticable latency in the test UI so for this project I felt it 
+would be detrimental to compromise on SOLID/OO principles.
+
+
+Improvements/ extension work
+-----------------------------
+
+I have hacked together a really ugly global static cs file to act as test config (TestConfig.cs) to get things up and running. This has created a code
+stink throughout the ArtifactLocator.Tests project. TestConfig.cs should be burned and replaced with something good.
+
+In theory, there is the possibility of a stack overflow exception due my recursive kmean algorithm. It is extremely unlikely, however this is a vulnerability
+that should be addressed at some point. A counter would be enough to exit if we go too deep down the rabbit hole.
+
+While the algorithm is generally quite reliable it is not always perfect. My test class generates random test data around configurable points + noise and 
+it generally works a treat. There are occasions when a tight cluster of random noise is found instead of the result we want. There may be some opportunity
+to improve the algorithm. Equally though, if it is finding a tight cluster according to the rules we set, then one could argue that it is working as it is 
+supposed to and we are limited by the nature or random data.

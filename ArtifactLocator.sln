@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtifactLocator", "ArtifactLocator\ArtifactLocator.csproj", "{A127C3B6-B3DB-42A9-8C6E-AB9E061F65A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtifactLocator.Tests", "ArtifactLocator.Tests\ArtifactLocator.Tests.csproj", "{7072A12A-12C5-4BB7-9F0E-D77CB1656147}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClusterAlgorithms", "ClusterAlgorithms\ClusterAlgorithms.csproj", "{5BAE0619-E66C-4CF6-B141-5952122F47D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Utilities.csproj", "{EA1BB746-75C5-43DC-B8FE-A64713CA5FB3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtifactLocatorVisualisationUI", "ArtifactLocatorVisualisationUI\ArtifactLocatorVisualisationUI.csproj", "{C3CFC808-4EC5-4939-90BA-858874C4D224}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filters", "Filtering\Filters.csproj", "{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A127C3B6-B3DB-42A9-8C6E-AB9E061F65A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A127C3B6-B3DB-42A9-8C6E-AB9E061F65A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A127C3B6-B3DB-42A9-8C6E-AB9E061F65A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A127C3B6-B3DB-42A9-8C6E-AB9E061F65A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7072A12A-12C5-4BB7-9F0E-D77CB1656147}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7072A12A-12C5-4BB7-9F0E-D77CB1656147}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7072A12A-12C5-4BB7-9F0E-D77CB1656147}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7072A12A-12C5-4BB7-9F0E-D77CB1656147}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BAE0619-E66C-4CF6-B141-5952122F47D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BAE0619-E66C-4CF6-B141-5952122F47D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BAE0619-E66C-4CF6-B141-5952122F47D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BAE0619-E66C-4CF6-B141-5952122F47D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA1BB746-75C5-43DC-B8FE-A64713CA5FB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA1BB746-75C5-43DC-B8FE-A64713CA5FB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA1BB746-75C5-43DC-B8FE-A64713CA5FB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA1BB746-75C5-43DC-B8FE-A64713CA5FB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3CFC808-4EC5-4939-90BA-858874C4D224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3CFC808-4EC5-4939-90BA-858874C4D224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3CFC808-4EC5-4939-90BA-858874C4D224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3CFC808-4EC5-4939-90BA-858874C4D224}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D0AD0F2C-34F6-4D77-9725-86AE91249604}
+	EndGlobalSection
+EndGlobal
