@@ -27,9 +27,6 @@ namespace Utilities.RandomNumbers
         {
             ushort xLowerLimit = (ushort)Maths.Max(0, root.X - maxDeviance);
             ushort xUpperLimit = (ushort)Maths.Min(upperLimit, root.X + maxDeviance);
-
-
-
             ushort x = (ushort)seed.Next(xLowerLimit, xUpperLimit);
 
             ushort yLowerLimit = (ushort)Maths.Max(0, root.Y - maxDeviance);

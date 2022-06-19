@@ -1,23 +1,21 @@
 ﻿using random = Utilities.RandomNumbers.RandomNumberGenerator;
 using Maths = System.Math;
+using ArtifactLocator.Definitions;
 
 namespace ClusterAlgorithms.KMeans
 {
     public class KMeansClusterAlgorithm : IClusterAlgorithm
     {
-        private List<(ushort X, ushort Y)> coordinateList;
+        private List<Coordinates> coordinateList;
 
-        public void LoadCoordinates(List<(ushort X, ushort Y)> coordinateList)
-        {
-            this.coordinateList = coordinateList;
-        }
-
-        public List<Cluster> Process(ushort expectedClusterCount)
+        public List<Cluster> Process(List<Coordinates> coordinateList, ushort expectedClusterCount)
         {
             if (coordinateList == null)
             {
                 throw new ArgumentNullException("coordinateList");
             }
+
+            this.coordinateList = coordinateList;
 
             List<KMean> startingMeans = null;
             List<KMeansCluster> clusters = null;
@@ -37,7 +35,7 @@ namespace ClusterAlgorithms.KMeans
             var clusters = new List<KMeansCluster>(kMeans.Count);
             kMeans.ForEach(x => clusters.Add(new KMeansCluster()));
 
-            foreach ((ushort X, ushort Y) coordinates in coordinateList)
+            foreach (Coordinates coordinates in coordinateList)
             {
                 float minDistance = float.MaxValue;
                 int index = -1;
@@ -53,7 +51,7 @@ namespace ClusterAlgorithms.KMeans
                     }
                 }
 
-                clusters[index].Coordinates.Add(coordinates);
+                clusters[index].MemberCoordinates.Add(coordinates);
             }
 
             List<KMean> newKMeans = clusters.Select(c => c.CalculateKMean()).ToList();
@@ -86,6 +84,11 @@ namespace ClusterAlgorithms.KMeans
             {
                 (ushort X, ushort Y) startingMean = random.GeneratePair(lowerBound, upperBound);
                 startingMeans.Add(new KMean(startingMean));
+
+                if (startingMeans.Any(sm => sm == null))
+                {
+
+                }
             }
 
             return startingMeans;

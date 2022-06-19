@@ -15,5 +15,9 @@
         };
 
         internal static ushort MaxArtifactLocationDeviance = 4;
+
+        public static ushort MaxClusterDiameter = 10;
+
+        public static ushort MinimumClusterSize = 3;
     }
 }

@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ArtifactLocator\ArtifactLocator.csproj" />
     <ProjectReference Include="..\ClusterAlgorithms\ClusterAlgorithms.csproj" />
+    <ProjectReference Include="..\Filtering\Filters.csproj" />
     <ProjectReference Include="..\Utilities\Utilities.csproj" />
   </ItemGroup>
 

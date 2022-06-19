@@ -6,9 +6,4 @@
     <Nullable>disable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ClusterAlgorithms\ClusterAlgorithms.csproj" />
-    <ProjectReference Include="..\Filtering\Filtering.csproj" />
-  </ItemGroup>
-
 </Project>

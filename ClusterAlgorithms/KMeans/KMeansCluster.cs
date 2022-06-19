@@ -1,4 +1,6 @@
-﻿namespace ClusterAlgorithms.KMeans
+﻿using ArtifactLocator.Definitions;
+
+namespace ClusterAlgorithms.KMeans
 {
     internal class KMeansCluster : Cluster
     {

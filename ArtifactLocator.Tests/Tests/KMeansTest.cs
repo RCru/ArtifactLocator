@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using ClusterAlgorithms.KMeans;
+using Filters.ClusterDiameter;
 
 namespace ArtifactLocator.Tests
 {
@@ -8,7 +9,7 @@ namespace ArtifactLocator.Tests
     {
         public KMeansTest() : base()
         {
-            locator = new Locator(new KMeansClusterAlgorithm());
+            locator = new Locator(new KMeansClusterAlgorithm(), new ClusterDiameterFilter(TestConfig.MaxClusterDiameter, TestConfig.MinimumClusterSize));
         }
 
         [Test]

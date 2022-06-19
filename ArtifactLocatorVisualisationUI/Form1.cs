@@ -1,8 +1,11 @@
 using ArtifactLocator;
+using ArtifactLocator.Definitions;
 using ArtifactLocator.Results;
 using ArtifactLocator.Tests;
 using ArtifactLocator.Tests.TestData;
+using ArtifactLocatorVisualisationUI.UserNotification;
 using ClusterAlgorithms.KMeans;
+using Filters.ClusterDiameter;
 
 namespace ArtifactLocatorVisualisationUI
 {
@@ -17,12 +20,6 @@ namespace ArtifactLocatorVisualisationUI
 
             artifactMaps = LoadTestData();
             PopulateResultsMap(artifactMaps);
-            EnableRunButton();
-        }
-
-        private void EnableRunButton()
-        {
-            runButton.Enabled = true;
         }
 
         private List<bool[][]> LoadTestData()
@@ -34,50 +31,71 @@ namespace ArtifactLocatorVisualisationUI
             }
             catch (Exception ex)
             {
+                UserMessageForm.Error($"Unable to generate test data: {ex.Message}");
                 return null;
             }
         }
 
         private void PopulateResultsMap(List<bool[][]> artifactMaps)
         {
-            resultsMap = new ResultsMap(visualisationPictureBox.Width, visualisationPictureBox.Height);
+            if (artifactMaps == null) return;
 
-            List<(ushort X, ushort Y)> artifactCoordinates = artifactMaps.SelectMany(map => map.Interpret()).ToList();
+            resultsMap = new ResultsMap(visualisationPictureBox.Width, visualisationPictureBox.Height);
             float scalingAdjustment = visualisationPictureBox.Width / (float)TestConfig.TestDataInstanceSize;
-            resultsMap.AddCoordinatePoints(artifactCoordinates, scalingAdjustment);
+            resultsMap.SetScalingAdjustment(scalingAdjustment);
+
+            List<Coordinates> artifactCoordinates = artifactMaps.SelectMany(map => map.Interpret()).ToList();
+            resultsMap.AddTestDataPoints(artifactCoordinates);
 
             visualisationPictureBox.Image = resultsMap.Image;
+            EnableRunButton();
+        }
+
+        private void EnableRunButton()
+        {
+            runButton.Enabled = true;
+        }
+
+        private void runButton_Click(object sender, EventArgs e)
+        {
+            List<AreaOfInterest> areasOfInterest = null;
+
+            try
+            {
+                var locator = new Locator(new KMeansClusterAlgorithm(), new ClusterDiameterFilter(TestConfig.MaxClusterDiameter, TestConfig.MinimumClusterSize));
+                areasOfInterest = locator.Run(artifactMaps, TestConfig.ExpectedArtifactCount);
+            }
+            catch (Exception ex)
+            {
+                UserMessageForm.Error($"An error occurred during artifact location: {ex.Message}");
+                return;
+            }
+
+            if (areasOfInterest == null) 
+            {
+                UserMessageForm.Warn($"Unexpected outcome: The artifact locator did not return a result.");
+                return;
+            }
+
+            try
+            {
+                areasOfInterest.ForEach(a => resultsMap.AddClusteredDataPoints(a.Cluster.MemberCoordinates));
+                resultsMap.AddAreasOfInterest(areasOfInterest.Select(a => a.Coordinates).ToList(), TestConfig.MaxClusterDiameter);
+
+                visualisationPictureBox.Image = resultsMap.Image;
+            }
+            catch (Exception ex)
+            {
+                UserMessageForm.Error($"An error occurred whilst attempting to display artifact locations: {ex.Message}");
+                return;
+            }
         }
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             visualisationPictureBox.Image = null;
             visualisationPictureBox.Dispose();
-            resultsMap.Dispose();
-        }
-
-        private void runButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                var locator = new Locator(new KMeansClusterAlgorithm());
-                List<AreaOfInterest> areasOfInterest = locator.Run(artifactMaps, TestConfig.ExpectedArtifactCount);
-
-                if (areasOfInterest == null) return;
-
-                resultsMap.Clear();
-
-                float scalingAdjustment = visualisationPictureBox.Width / (float)TestConfig.TestDataInstanceSize;
-
-                areasOfInterest.ForEach(a => resultsMap.AddCoordinatePoints(a.Cluster.Coordinates, scalingAdjustment));
-                resultsMap.AddCentrePoints(areasOfInterest.Select(a => a.Coordinates).ToList(), scalingAdjustment);
-
-                visualisationPictureBox.Image = resultsMap.Image;
-            }
-            catch (Exception ex)
-            {
-                //exception message to user here
-            }
+            resultsMap?.Dispose();
         }
     }
 }

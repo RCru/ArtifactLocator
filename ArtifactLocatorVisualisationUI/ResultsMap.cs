@@ -1,9 +1,12 @@
-﻿using Maths = System.Math;
+﻿using ArtifactLocator.Definitions;
+using ArtifactLocatorVisualisationUI.Utilities;
+using Maths = System.Math;
 
 namespace ArtifactLocatorVisualisationUI
 {
-    //Since Winforms is depreciated, it doesn't graph library in .NET 6
-    //This class creates a scatter plot "map" by drawing circles on an image
+    //For testing and visualisation purposes only
+    //Since Winforms is depreciated, it doesn't support a graph library in .NET 6
+    //This class creates a scatter plot "map" by drawing circles on a bitmap
     public class ResultsMap : IDisposable
     {
         public Bitmap Image => image;
@@ -13,20 +16,12 @@ namespace ArtifactLocatorVisualisationUI
         private Bitmap image;
 
         private const ushort dataPointDiameterPixels = 5;
-
-        private Queue<Pen> pens = new Queue<Pen>();
+        private float scalingAdjustment = 1;
 
         public ResultsMap(int width, int height)
         {
             this.width = width;
             this.height = height;
-
-            pens.Enqueue(Pens.Red);
-            pens.Enqueue(Pens.Blue);
-            pens.Enqueue(Pens.Green);
-            pens.Enqueue(Pens.Red);
-            pens.Enqueue(Pens.Blue);
-            pens.Enqueue(Pens.Green);
 
             GenerateTemplate();
         }
@@ -43,10 +38,32 @@ namespace ArtifactLocatorVisualisationUI
             }
         }
 
-        public void AddCoordinatePoints(List<(ushort X, ushort Y)> coordinateList, float scalingAdjustment)
+        public void SetScalingAdjustment(float scalingAdjustment)
         {
-            List<Rectangle> boundingBoxes = GenerateBoundingBoxes(coordinateList, scalingAdjustment);
-            Pen pen = pens.Dequeue();
+            this.scalingAdjustment = scalingAdjustment;
+        }
+
+        public void AddTestDataPoints(List<Coordinates> coordinateList)
+        {
+            Pen pen = Pens.Black;
+            DrawCircles(coordinateList, pen);
+        }
+
+        public void AddClusteredDataPoints(List<Coordinates> coordinateList)
+        {
+            Pen pen = RedBlueGreen.Next();
+            DrawCircles(coordinateList, pen);
+        }
+
+        public void AddAreasOfInterest(List<Coordinates> coordinateList, ushort maxClusterDiameter)
+        {
+            Pen pen = Pens.Black;
+            DrawCircles(coordinateList, pen, (ushort)(maxClusterDiameter * scalingAdjustment));
+        }
+
+        private void DrawCircles(List<Coordinates> coordinateList, Pen pen, ushort diameterPixelsOverride = 0)
+        {
+            List<Rectangle> boundingBoxes = GenerateBoundingBoxes(coordinateList, diameterPixelsOverride);
 
             using (Graphics g = Graphics.FromImage(image))
             {
@@ -57,41 +74,41 @@ namespace ArtifactLocatorVisualisationUI
             }
         }
 
-        public void AddCentrePoints(List<(ushort X, ushort Y)> coordinateList, float scalingAdjustment)
-        {
-            List<Rectangle> boundingBoxes = GenerateBoundingBoxes(coordinateList, scalingAdjustment, 2);
-
-            using (Graphics g = Graphics.FromImage(image))
-            {
-                foreach (Rectangle boundingBox in boundingBoxes)
-                {
-                    g.DrawEllipse(Pens.Black, boundingBox);
-                }
-            }
-        }
-
-        public void Clear()
-        {
-            GenerateTemplate();
-        }
-
-        private List<Rectangle> GenerateBoundingBoxes(List<(ushort X, ushort Y)> coordinateList, float scalingAdjustment, ushort zoom = 1)
+        private List<Rectangle> GenerateBoundingBoxes(List<Coordinates> coordinateList, ushort diameterPixelsOverride)
         {
             var boundingBoxes = new List<Rectangle>(coordinateList.Count);
 
-            //intentionally exploiting implicit Math.Floor in int division
-            int dataPointCetralisingOffset = dataPointDiameterPixels / 2;
+            int dataPointCetralisingOffset, rectLength;
 
-            foreach ((ushort X, ushort Y) in coordinateList)
+            if (diameterPixelsOverride != 0)
             {
-                int topLeftX = Maths.Max((int)(X * scalingAdjustment) - (dataPointCetralisingOffset * zoom), 0);
-                int topLeftY = Maths.Max((int)(Y * scalingAdjustment) - (dataPointCetralisingOffset * zoom), 0);
+                //intentionally exploiting implicit Math.Floor in int division
+                dataPointCetralisingOffset = diameterPixelsOverride / 2;
+                rectLength = diameterPixelsOverride;
+            }
+            else
+            {
+                dataPointCetralisingOffset = dataPointDiameterPixels / 2;
+                rectLength = dataPointDiameterPixels;
+            }
 
-                var box = new Rectangle(topLeftX, topLeftY, dataPointDiameterPixels * zoom, dataPointDiameterPixels * zoom);
+            foreach (Coordinates coordinates in coordinateList)
+            {
+                int topLeftX = Maths.Max((int)(coordinates.X * scalingAdjustment) - dataPointCetralisingOffset, 0);
+                int topLeftY = Maths.Max((int)(coordinates.Y * scalingAdjustment) - dataPointCetralisingOffset, 0);
+
+                var box = new Rectangle(topLeftX, topLeftY, rectLength, rectLength);
                 boundingBoxes.Add(box);
             }
 
             return boundingBoxes;
+        }
+
+
+
+        public void Clear()
+        {
+            GenerateTemplate();
         }
 
         public void Dispose()

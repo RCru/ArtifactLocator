@@ -1,10 +1,12 @@
-﻿namespace ArtifactLocator
+﻿using ArtifactLocator.Definitions;
+
+namespace ArtifactLocator
 {
     public static class ArtifactMapInterpreter
     {
-        public static List<(ushort X, ushort Y)> Interpret(this bool[][] map, ushort initialCapacity = 3)
+        public static List<Coordinates> Interpret(this bool[][] map, ushort initialCapacity = 3)
         {
-            var result = new List<(ushort X,ushort Y)>(initialCapacity);
+            var result = new List<Coordinates>(initialCapacity);
 
             for (ushort i = 0; i < map.Length; ++i)
             {
@@ -12,7 +14,7 @@
                 {
                     if (map[i][j])
                     {
-                        result.Add((i, j));
+                        result.Add(new Coordinates(i, j));
                     }
                 }
             }

@@ -1,10 +1,10 @@
-﻿using ClusterAlgorithms;
+﻿using ArtifactLocator.Definitions;
 
 namespace ArtifactLocator.Results
 {
     public class AreaOfInterest
     {
-        public (ushort X, ushort Y) Coordinates => Cluster.CentrePoint;
+        public Coordinates Coordinates => Cluster.CentrePoint;
 
         public Cluster Cluster { get; }
 

@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utilities", "Utilities\Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ArtifactLocatorVisualisationUI", "ArtifactLocatorVisualisationUI\ArtifactLocatorVisualisationUI.csproj", "{C3CFC808-4EC5-4939-90BA-858874C4D224}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filtering", "Filtering\Filtering.csproj", "{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Filters", "Filtering\Filters.csproj", "{B7B84DC1-3631-4BEB-8442-7D305C48EDF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
