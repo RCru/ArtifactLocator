@@ -1,6 +1,6 @@
 # ArtifactLocator
 
-This a fun little project which solves a simple hypothetical problem detailed below.
+This is a fun little project which solves a simple hypothetical problem detailed below.
 
 The problem
 ------------
