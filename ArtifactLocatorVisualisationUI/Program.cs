@@ -1,3 +1,7 @@
+using Autofac;
+using ArtifactLocatorVisualisationUI.IOC;
+using ArtifactLocator;
+
 namespace ArtifactLocatorVisualisationUI
 {
     internal static class Program
@@ -11,7 +15,14 @@ namespace ArtifactLocatorVisualisationUI
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+
+            IContainer iocContainer = ContainerConfig.Configure();
+
+            using (ILifetimeScope scope = iocContainer.BeginLifetimeScope())
+            {
+                ILocator locator = scope.Resolve<ILocator>();
+                Application.Run(new Form1(locator));
+            }
         }
     }
 }
