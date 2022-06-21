@@ -3,7 +3,7 @@ using ArtifactLocator.Results;
 
 namespace ArtifactLocator
 {
-    public class Locator
+    public class Locator : ILocator
     {
         private IClusterAlgorithm clusterAlgorithm;
         private ICoordinateFilter clusterFilter;

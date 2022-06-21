@@ -4,8 +4,6 @@ using ArtifactLocator.Results;
 using ArtifactLocator.Tests;
 using ArtifactLocator.Tests.TestData;
 using ArtifactLocatorVisualisationUI.UserNotification;
-using ClusterAlgorithms.KMeans;
-using Filters.ClusterDiameter;
 
 namespace ArtifactLocatorVisualisationUI
 {
@@ -14,10 +12,13 @@ namespace ArtifactLocatorVisualisationUI
         private List<bool[][]> artifactMaps;
         private ResultsMap resultsMap;
 
-        public Form1()
+        private ILocator locator;
+
+        public Form1(ILocator locator)
         {
             InitializeComponent();
 
+            this.locator = locator;
             artifactMaps = LoadTestData();
             PopulateResultsMap(artifactMaps);
         }
@@ -62,7 +63,6 @@ namespace ArtifactLocatorVisualisationUI
 
             try
             {
-                var locator = new Locator(new KMeansClusterAlgorithm(), new ClusterDiameterFilter(TestConfig.MaxClusterDiameter, TestConfig.MinimumClusterSize));
                 areasOfInterest = locator.Run(artifactMaps, TestConfig.ExpectedArtifactCount);
             }
             catch (Exception ex)
