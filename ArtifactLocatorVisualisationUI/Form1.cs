@@ -41,6 +41,8 @@ namespace ArtifactLocatorVisualisationUI
         {
             if (artifactMaps == null) return;
 
+            if (resultsMap != null) resultsMap.Dispose();
+
             resultsMap = new ResultsMap(visualisationPictureBox.Width, visualisationPictureBox.Height);
             float scalingAdjustment = visualisationPictureBox.Width / (float)TestConfig.TestDataInstanceSize;
             resultsMap.SetScalingAdjustment(scalingAdjustment);
@@ -96,6 +98,12 @@ namespace ArtifactLocatorVisualisationUI
             visualisationPictureBox.Image = null;
             visualisationPictureBox.Dispose();
             resultsMap?.Dispose();
+        }
+
+        private void refreshButton_Click(object sender, EventArgs e)
+        {
+            artifactMaps = LoadTestData();
+            PopulateResultsMap(artifactMaps);
         }
     }
 }

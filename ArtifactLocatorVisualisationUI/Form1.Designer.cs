@@ -30,6 +30,7 @@
         {
             this.visualisationPictureBox = new System.Windows.Forms.PictureBox();
             this.runButton = new System.Windows.Forms.Button();
+            this.refreshButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.visualisationPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,11 +54,22 @@
             this.runButton.UseVisualStyleBackColor = true;
             this.runButton.Click += new System.EventHandler(this.runButton_Click);
             // 
+            // refreshButton
+            // 
+            this.refreshButton.Location = new System.Drawing.Point(447, 532);
+            this.refreshButton.Name = "refreshButton";
+            this.refreshButton.Size = new System.Drawing.Size(65, 26);
+            this.refreshButton.TabIndex = 2;
+            this.refreshButton.Text = "Refresh";
+            this.refreshButton.UseVisualStyleBackColor = true;
+            this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(526, 570);
+            this.Controls.Add(this.refreshButton);
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.visualisationPictureBox);
             this.Name = "Form1";
@@ -72,5 +84,6 @@
 
         private PictureBox visualisationPictureBox;
         private Button runButton;
+        private Button refreshButton;
     }
 }
